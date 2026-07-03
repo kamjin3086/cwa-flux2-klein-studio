@@ -1,0 +1,116 @@
+{
+  "appName": "Flux 2 Klein Studio",
+  "tagline": "Text-to-image generation through the hidden Flux 2 Klein ComfyUI workflow.",
+  "outputType": "image",
+  "fields": [
+    {
+      "name": "prompt",
+      "label": "Prompt",
+      "type": "textarea",
+      "valueType": "string",
+      "placeholder": "Describe the image you want...",
+      "required": true,
+      "default": "A white cat walking through a forest beside wildflowers, stopped by a small river crossing its path",
+      "maxLength": 4000,
+      "node_id": "6",
+      "input": "text"
+    },
+    {
+      "name": "resolution",
+      "label": "Canvas",
+      "type": "select",
+      "valueType": "string",
+      "default": "1536x864 (16:9 Flux)",
+      "options": [
+        "1024x1024 (1:1 Flux)",
+        "1536x864 (16:9 Flux)",
+        "1792x1008 (16:9 Flux)",
+        "864x1536 (9:16 Flux)",
+        "1008x1792 (9:16 Flux)",
+        "1024x1280 (4:5 Flux)",
+        "960x1280 (3:4 Flux)",
+        "1280x960 (4:3 Flux)",
+        "1536x1024 (3:2 Flux)",
+        "1024x1536 (2:3 Flux)",
+        "1024x512 (2:1 Flux)",
+        "1344x576 (21:9 Flux)"
+      ],
+      "node_id": "71",
+      "input": "resolution"
+    },
+    {
+      "name": "seed",
+      "label": "Seed",
+      "type": "number",
+      "valueType": "int",
+      "default": 781678425253311,
+      "min": 0,
+      "max": 9007199254740991,
+      "step": 1,
+      "advanced": true,
+      "node_id": "25",
+      "input": "noise_seed"
+    },
+    {
+      "name": "steps",
+      "label": "Steps",
+      "type": "slider",
+      "valueType": "int",
+      "default": 6,
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "advanced": true,
+      "node_id": "48",
+      "input": "steps"
+    },
+    {
+      "name": "guidance",
+      "label": "Guidance",
+      "type": "slider",
+      "valueType": "float",
+      "default": 6,
+      "min": 0,
+      "max": 20,
+      "step": 0.5,
+      "advanced": true,
+      "node_id": "26",
+      "input": "guidance"
+    },
+    {
+      "name": "sampler",
+      "label": "Sampler",
+      "type": "select",
+      "valueType": "string",
+      "default": "euler",
+      "advanced": true,
+      "options": [
+        "euler",
+        "euler_cfg_pp",
+        "euler_ancestral",
+        "heun",
+        "dpmpp_2m",
+        "dpmpp_2m_sde",
+        "dpmpp_3m_sde",
+        "ddim",
+        "uni_pc",
+        "res_2m"
+      ],
+      "node_id": "16",
+      "input": "sampler_name"
+    },
+    {
+      "name": "batch_size",
+      "label": "Batch Size",
+      "type": "number",
+      "valueType": "int",
+      "default": 1,
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "advanced": true,
+      "node_id": "71",
+      "input": "batch_size"
+    }
+  ]
+}
