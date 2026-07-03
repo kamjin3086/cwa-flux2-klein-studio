@@ -324,6 +324,7 @@ export default function App() {
           <button className="generate-button" disabled={busy || status.checking} type="submit">
             {busy ? "生成中..." : "生成图像"}
           </button>
+          {busy && <p className="wait-note">很快就好，请保持页面打开，不要刷新。</p>}
 
           {!status.ok && !status.checking && (
             <p className="message error" role="alert">
