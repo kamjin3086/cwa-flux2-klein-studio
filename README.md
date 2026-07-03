@@ -10,12 +10,17 @@ Install dependencies:
 npm install
 ```
 
-Set the ComfyUI address without committing it:
+Copy `.env.example` to `.env` and edit the values:
 
-```powershell
-$env:COMFY_URL="http://YOUR_COMFYUI_HOST:8000"
-$env:APP_HOST="0.0.0.0"
-$env:APP_PORT="17000"
+```bash
+cp .env.example .env
+# Then edit .env to set your ComfyUI address:
+#   COMFY_URL=http://YOUR_COMFYUI_HOST:8000
+```
+
+Start:
+
+```bash
 npm start
 ```
 
