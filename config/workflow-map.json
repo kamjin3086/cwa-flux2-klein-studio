@@ -1,23 +1,23 @@
 {
-  "appName": "Flux 2 Klein Studio",
-  "tagline": "Text-to-image generation through the hidden Flux 2 Klein ComfyUI workflow.",
+  "appName": "Flux 2 Klein 图像工作室",
+  "tagline": "通过隐藏的 Flux 2 Klein ComfyUI 工作流生成图像。",
   "outputType": "image",
   "fields": [
     {
       "name": "prompt",
-      "label": "Prompt",
+      "label": "提示词",
       "type": "textarea",
       "valueType": "string",
-      "placeholder": "Describe the image you want...",
+      "placeholder": "描述你想生成的画面...",
       "required": true,
-      "default": "A white cat walking through a forest beside wildflowers, stopped by a small river crossing its path",
+      "default": "一只白猫穿过开满野花的森林，在一条横跨道路的小河前停下脚步",
       "maxLength": 4000,
       "node_id": "6",
       "input": "text"
     },
     {
       "name": "resolution",
-      "label": "Canvas",
+      "label": "画布尺寸",
       "type": "select",
       "valueType": "string",
       "default": "1536x864 (16:9 Flux)",
@@ -40,7 +40,7 @@
     },
     {
       "name": "seed",
-      "label": "Seed",
+      "label": "种子",
       "type": "number",
       "valueType": "int",
       "default": 781678425253311,
@@ -53,7 +53,7 @@
     },
     {
       "name": "steps",
-      "label": "Steps",
+      "label": "步数",
       "type": "slider",
       "valueType": "int",
       "default": 6,
@@ -66,7 +66,7 @@
     },
     {
       "name": "guidance",
-      "label": "Guidance",
+      "label": "引导强度",
       "type": "slider",
       "valueType": "float",
       "default": 6,
@@ -79,7 +79,7 @@
     },
     {
       "name": "sampler",
-      "label": "Sampler",
+      "label": "采样器",
       "type": "select",
       "valueType": "string",
       "default": "euler",
@@ -101,7 +101,7 @@
     },
     {
       "name": "batch_size",
-      "label": "Batch Size",
+      "label": "批量数量",
       "type": "number",
       "valueType": "int",
       "default": 1,

@@ -1,31 +1,31 @@
-# Flux 2 Klein Studio
+# Flux 2 Klein 图像工作室
 
-Reusable ComfyUI workflow app for a Flux 2 Klein text-to-image workflow.
+用于 Flux 2 Klein 文生图工作流的本地 ComfyUI 网页应用。
 
-## Run
+## 运行
 
-Install dependencies:
+安装依赖：
 
 ```bash
 npm install
 ```
 
-Copy `.env.example` to `.env` and edit the values:
+复制 `.env.example` 为 `.env`，并按需修改配置：
 
 ```bash
 cp .env.example .env
-# Then edit .env to set your ComfyUI address:
+# 然后在 .env 中设置你的 ComfyUI 地址：
 #   COMFY_URL=http://YOUR_COMFYUI_HOST:8000
 ```
 
-Start:
+启动：
 
 ```bash
 npm start
 ```
 
-Open `http://127.0.0.1:17000` on this machine, or use the host machine's LAN address with port `17000`.
+在本机打开 `http://127.0.0.1:17000`，或使用主机的局域网地址加 `17000` 端口访问。
 
-## Repository Notes
+## 仓库说明
 
-Do not commit `.env`, `node_modules/`, or `dist/`. The committed `.env.example` is intentionally a placeholder so the app can be shared without exposing a private ComfyUI address.
+不要提交 `.env`、`node_modules/` 或 `dist/`。已提交的 `.env.example` 只保留占位值，方便共享应用时不泄露私有 ComfyUI 地址。

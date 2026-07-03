@@ -34,9 +34,9 @@ function patchWorkflow(values) {
   for (const field of map.fields || []) {
     if (!(field.name in values)) continue;
     const node = workflow[field.node_id];
-    if (!node) throw new Error(`Workflow node ${field.node_id} for ${field.name} was not found.`);
+    if (!node) throw new Error(`找不到 ${field.label || field.name} 对应的工作流节点 ${field.node_id}。`);
     if (!node.inputs || !(field.input in node.inputs)) {
-      throw new Error(`Input ${field.input} was not found on node ${field.node_id}.`);
+      throw new Error(`工作流节点 ${field.node_id} 上找不到输入项 ${field.input}。`);
     }
     node.inputs[field.input] = coerceValue(values[field.name], field);
   }
@@ -46,26 +46,26 @@ function patchWorkflow(values) {
 
 function coerceValue(value, field) {
   if (field.required && (value === undefined || value === null || String(value).trim() === "")) {
-    throw new Error(`${field.label || field.name} is required.`);
+    throw new Error(`请填写${field.label || field.name}。`);
   }
 
   if (field.type === "select") {
     const text = String(value ?? "");
     const options = field.options || [];
     if (options.length && !options.includes(text)) {
-      throw new Error(`${field.label || field.name} must be one of: ${options.join(", ")}.`);
+      throw new Error(`${field.label || field.name} 必须是以下选项之一：${options.join(", ")}。`);
     }
     return text;
   }
 
   if (field.type === "number" || field.type === "slider") {
     const number = Number(value);
-    if (!Number.isFinite(number)) throw new Error(`${field.label || field.name} must be a number.`);
+    if (!Number.isFinite(number)) throw new Error(`${field.label || field.name} 必须是数字。`);
     if (field.min !== undefined && number < Number(field.min)) {
-      throw new Error(`${field.label || field.name} must be at least ${field.min}.`);
+      throw new Error(`${field.label || field.name} 不能小于 ${field.min}。`);
     }
     if (field.max !== undefined && number > Number(field.max)) {
-      throw new Error(`${field.label || field.name} must be at most ${field.max}.`);
+      throw new Error(`${field.label || field.name} 不能大于 ${field.max}。`);
     }
     if (field.valueType === "int") return Math.round(number);
     return number;
@@ -75,7 +75,7 @@ function coerceValue(value, field) {
 
   const text = String(value ?? "");
   if (field.maxLength && text.length > Number(field.maxLength)) {
-    throw new Error(`${field.label || field.name} is too long.`);
+    throw new Error(`${field.label || field.name} 内容太长。`);
   }
   return text;
 }
@@ -150,7 +150,7 @@ async function pollJob(jobId) {
   }
 
   job.status = "error";
-  job.error = "Generation timed out.";
+  job.error = "生成超时。";
   jobs.set(jobId, job);
 }
 
@@ -190,7 +190,7 @@ async function recoverPrompt(promptId) {
     status: "unknown",
     progress: 0,
     outputs: [],
-    error: "This prompt is no longer in ComfyUI history or queue."
+    error: "这个任务已经不在 ComfyUI 历史记录或队列中。"
   };
 }
 
@@ -222,7 +222,7 @@ app.post("/api/generate", async (request, response) => {
       body: JSON.stringify({ prompt: workflow, client_id: clientId })
     });
     const data = await comfyResponse.json();
-    if (!data.prompt_id) throw new Error("ComfyUI did not return a prompt_id.");
+    if (!data.prompt_id) throw new Error("ComfyUI 没有返回 prompt_id。");
 
     const jobId = crypto.randomUUID();
     jobs.set(jobId, {
@@ -243,7 +243,7 @@ app.post("/api/generate", async (request, response) => {
 
 app.get("/api/jobs/:jobId", (request, response) => {
   const job = jobs.get(request.params.jobId);
-  if (!job) return response.status(404).json({ error: "Job not found." });
+  if (!job) return response.status(404).json({ error: "找不到任务。" });
   response.json(job);
 });
 
@@ -293,13 +293,13 @@ app.get("*", (request, response, next) => {
   if (request.path.startsWith("/api/")) return next();
   const indexPath = path.join(distDir, "index.html");
   if (fs.existsSync(indexPath)) return response.sendFile(indexPath);
-  response.status(404).send("Frontend build not found. Run npm run build, then start the server.");
+  response.status(404).send("找不到前端构建产物。请先运行 npm run build，然后启动服务。");
 });
 
 app.listen(APP_PORT, APP_HOST, () => {
   const sameMachineUrl = `http://127.0.0.1:${APP_PORT}`;
-  console.log(`ComfyUI workflow app listening on http://${APP_HOST}:${APP_PORT}`);
-  console.log(`Open on this machine: ${sameMachineUrl}`);
-  console.log(`ComfyUI backend: ${COMFY_URL}`);
-  console.log(`Workflow: ${WORKFLOW_PATH}`);
+  console.log(`ComfyUI 工作流应用正在监听 http://${APP_HOST}:${APP_PORT}`);
+  console.log(`本机打开：${sameMachineUrl}`);
+  console.log(`ComfyUI 后端：${COMFY_URL}`);
+  console.log(`工作流：${WORKFLOW_PATH}`);
 });

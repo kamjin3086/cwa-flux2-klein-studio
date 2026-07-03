@@ -36,12 +36,23 @@ function buildDownloadUrl(output, jobId, values, appName) {
   return `/api/download?${params.toString()}`;
 }
 
+function jobStatusLabel(status) {
+  const labels = {
+    queued: "排队中",
+    running: "生成中",
+    complete: "已完成",
+    error: "出错",
+    unknown: "状态未知"
+  };
+  return labels[status] || status;
+}
+
 function ResultPreview({ outputs, jobId, values, appName }) {
   if (!outputs?.length) {
     return (
       <div className="empty-result">
-        <span>Awaiting first frame</span>
-        <p>Your Flux image will settle here after generation.</p>
+        <span>等待第一张图像</span>
+        <p>生成完成后，Flux 图像会显示在这里。</p>
       </div>
     );
   }
@@ -60,11 +71,11 @@ function ResultPreview({ outputs, jobId, values, appName }) {
         <audio src={`${API_BASE}${first.url}`} controls />
       ) : (
         <a className="download-link" href={`${API_BASE}${first.url}`} target="_blank" rel="noreferrer">
-          Open {first.filename}
+          打开 {first.filename}
         </a>
       )}
       <a className="download-button" href={`${API_BASE}${downloadUrl}`}>
-        Download result
+        下载结果
       </a>
       <p className="file-note">{first.filename}</p>
     </div>
@@ -273,7 +284,7 @@ export default function App() {
         body: JSON.stringify(values)
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Generation failed.");
+      if (!response.ok) throw new Error(data.error || "生成失败。");
       const nextJob = { jobId: data.jobId, promptId: data.promptId, status: "queued", progress: 0.05, outputs: [] };
       setJob(nextJob);
       saveState({ values, job: nextJob });
@@ -288,12 +299,12 @@ export default function App() {
         <form className="control-panel" onSubmit={generate}>
           <div className="title-row">
             <div>
-              <p className="eyebrow">ComfyUI workflow</p>
-              <h1>{config?.appName || "Workflow App"}</h1>
+              <p className="eyebrow">ComfyUI 工作流</p>
+              <h1>{config?.appName || "工作流应用"}</h1>
               {config?.tagline && <p className="tagline">{config.tagline}</p>}
             </div>
             <span className={`status-pill ${status.ok ? "online" : "offline"}`}>
-              {status.checking ? "Checking" : status.ok ? "Connected" : "Offline"}
+              {status.checking ? "检查中" : status.ok ? "已连接" : "离线"}
             </span>
           </div>
 
@@ -303,7 +314,7 @@ export default function App() {
 
           {advancedFields.length > 0 && (
             <details className="advanced-panel">
-              <summary>Advanced controls</summary>
+              <summary>高级参数</summary>
               {advancedFields.map((field) => (
                 <FieldControl key={field.name} field={field} value={values[field.name] ?? ""} onChange={updateValue} />
               ))}
@@ -311,12 +322,12 @@ export default function App() {
           )}
 
           <button className="generate-button" disabled={busy || status.checking} type="submit">
-            {busy ? "Generating..." : "Generate"}
+            {busy ? "生成中..." : "生成图像"}
           </button>
 
           {!status.ok && !status.checking && (
             <p className="message error" role="alert">
-              {status.error || "ComfyUI is not reachable. Start ComfyUI and refresh this page."}
+              {status.error || "无法连接 ComfyUI。请启动 ComfyUI 后刷新此页面。"}
             </p>
           )}
           {error && <p className="message error" role="alert">{error}</p>}
@@ -325,13 +336,13 @@ export default function App() {
         <section className="output-panel" aria-live="polite">
           <div className="output-header">
             <div>
-              <p className="eyebrow">Output</p>
-              <h2>{job?.status ? job.status : "Ready to render"}</h2>
+              <p className="eyebrow">输出</p>
+              <h2>{job?.status ? jobStatusLabel(job.status) : "准备生成"}</h2>
             </div>
             {busy && <span className="progress-label">{progressPercent}%</span>}
           </div>
           {busy && (
-            <div className="progress-track" aria-label="Generation progress">
+            <div className="progress-track" aria-label="生成进度">
               <div style={{ width: `${progressPercent}%` }} />
             </div>
           )}
