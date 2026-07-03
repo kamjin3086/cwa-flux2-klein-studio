@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 const API_BASE = "";
-const STORAGE_KEY = "cwa-flux2-klein-studio.state.v1";
+const STORAGE_KEY = "cwa-flux2-klein-studio.state.v2";
 
 function defaultValue(field) {
   if (field.default !== undefined) return field.default;
@@ -98,6 +98,11 @@ function saveState(patch) {
   }
 }
 
+function FieldDescription({ field }) {
+  if (!field.description) return null;
+  return <small className="field-description">{field.description}</small>;
+}
+
 function FieldControl({ field, value, onChange }) {
   const id = `field-${field.name}`;
 
@@ -113,6 +118,7 @@ function FieldControl({ field, value, onChange }) {
           rows={5}
           onChange={(event) => onChange(field.name, event.target.value)}
         />
+        <FieldDescription field={field} />
       </label>
     );
   }
@@ -130,6 +136,7 @@ function FieldControl({ field, value, onChange }) {
           value={value}
           onChange={(event) => onChange(field.name, event.target.value)}
         />
+        <FieldDescription field={field} />
       </label>
     );
   }
@@ -150,6 +157,7 @@ function FieldControl({ field, value, onChange }) {
             </option>
           ))}
         </select>
+        <FieldDescription field={field} />
       </label>
     );
   }
@@ -164,6 +172,7 @@ function FieldControl({ field, value, onChange }) {
           checked={Boolean(value)}
           onChange={(event) => onChange(field.name, event.target.checked)}
         />
+        <FieldDescription field={field} />
       </label>
     );
   }
@@ -182,6 +191,7 @@ function FieldControl({ field, value, onChange }) {
         placeholder={field.placeholder}
         onChange={(event) => onChange(field.name, event.target.value)}
       />
+      <FieldDescription field={field} />
     </label>
   );
 }

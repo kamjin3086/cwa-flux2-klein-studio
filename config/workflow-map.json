@@ -9,6 +9,7 @@
       "type": "textarea",
       "valueType": "string",
       "placeholder": "描述你想生成的画面...",
+      "description": "写清主体、环境、光线和风格，通常比单纯提高分辨率更有效。",
       "required": true,
       "default": "一只白猫穿过开满野花的森林，在一条横跨道路的小河前停下脚步",
       "maxLength": 4000,
@@ -20,7 +21,7 @@
       "label": "画布尺寸",
       "type": "select",
       "valueType": "string",
-      "default": "1536x864 (16:9 Flux)",
+      "default": "1024x1024 (1:1 Flux)",
       "options": [
         "1024x1024 (1:1 Flux)",
         "1536x864 (16:9 Flux)",
@@ -35,6 +36,7 @@
         "1024x512 (2:1 Flux)",
         "1344x576 (21:9 Flux)"
       ],
+      "description": "默认使用快速预览尺寸。需要横屏构图时再选 1536×864 或更高尺寸。",
       "node_id": "71",
       "input": "resolution"
     },
@@ -61,6 +63,7 @@
       "max": 40,
       "step": 1,
       "advanced": true,
+      "description": "默认 6 步偏速度优先；提高步数会更慢，细节可能更稳。",
       "node_id": "48",
       "input": "steps"
     },
@@ -74,6 +77,7 @@
       "max": 20,
       "step": 0.5,
       "advanced": true,
+      "description": "默认保持工作流原值；过高可能让画面更硬。",
       "node_id": "26",
       "input": "guidance"
     },
@@ -106,9 +110,10 @@
       "valueType": "int",
       "default": 1,
       "min": 1,
-      "max": 4,
+      "max": 2,
       "step": 1,
       "advanced": true,
+      "description": "默认一次生成 1 张最快；批量越多等待越久。",
       "node_id": "71",
       "input": "batch_size"
     }

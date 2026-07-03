@@ -154,6 +154,13 @@ h2 {
   resize: vertical;
 }
 
+.field-description {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
 .field input:focus,
 .field select:focus,
 .field textarea:focus,
