@@ -219,6 +219,38 @@ h2 {
   opacity: 0.64;
 }
 
+.job-timing {
+  border: 1px solid rgba(24, 32, 31, 0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  background: rgba(255, 253, 248, 0.72);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.stop-button {
+  border: 1px solid rgba(161, 63, 40, 0.35);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: var(--accent-dark);
+  background: #fffdf8;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.stop-button:focus-visible {
+  outline: 3px solid rgba(161, 63, 40, 0.28);
+  outline-offset: 2px;
+}
+
 .wait-note {
   margin: -8px 0 0;
   color: var(--muted);
@@ -236,6 +268,13 @@ h2 {
 .message.error {
   color: var(--accent-dark);
   background: #f6d9cf;
+}
+
+.duration-note {
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
 }
 
 .progress-track {
